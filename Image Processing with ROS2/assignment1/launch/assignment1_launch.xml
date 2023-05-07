@@ -1,0 +1,37 @@
+<launch>
+<arg name="threshold_light_onoff" default="80"/>
+<arg name="conversion_mode_img" default="gray"/>
+<arg name="pixel_threshold" default="232"/>
+<arg name="tau_s" default="0.1"/> <!-- Original value is 0.1 in jiwy_simulator.cpp, this can be changed here for unit test (Sub assignment 1.2.1) -->
+  
+  <node pkg="image_tools" exec="cam2image">
+	<param name="depth" value="1"/>
+	<param name="history" value="keep_last"/>
+	<remap from="/image" to="/webcam_input"/>
+  </node>
+  
+  <node pkg="assignment1" exec="brightness_node">
+	<param name="threshold" value="$(var threshold_light_onoff)"/>
+	<param name="conversion_mode" value="$(var conversion_mode_img)"/>
+	<remap from="/image" to="/webcam_input"/>
+  </node>
+
+  <node pkg="assignment1" exec="light_position_node">
+	<param name="pixel_threshold" value="$(var pixel_threshold)"/>
+	<remap from="/image" to="/webcam_input"/>
+  </node>
+  
+  <node pkg="assignment1" exec="jiwy_simulator">
+	<param name="tau_s" value="$(var tau_s)"/>
+  </node>  
+  <!-- node pkg="assignment1" exec="jiwy_unit_test"/ --> <!-- For testing the jiwy_simulator response to random setpoints. Do not run with jiwy_sequence_controller -->
+  <node pkg="assignment1" exec="jiwy_sequence_controller">
+  	<remap from="/image" to="/webcam_input"/>
+  </node>
+  
+  <node pkg="image_tools" exec="showimage" name="showimage">
+	<param name="depth" value="1"/>
+	<param name="history" value="keep_last"/>
+	<remap from="/image" to="/moving_camera_output"/>
+  </node>
+</launch>
