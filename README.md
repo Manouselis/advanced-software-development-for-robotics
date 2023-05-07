@@ -1,4 +1,5 @@
-# advanced-software-development-for-robotics The goal of this practical work is get familiar with soft real-time and hard real-time software development, and the combination of it, in the context of controlling robotic/mechatronic systems, i.e. physicalmachines.
+# advanced-software-development-for-robotics 
+The goal of this practical work is get familiar with soft real-time and hard real-time software development, and the combination of it, in the context of controlling robotic/mechatronic systems, i.e. physicalmachines.
 
 For the soft real-time part (Assignment set 1 and 3), we use ROS2 (Robotic Operating System 2), version Humble, heavily used in modern robotics. The algorithms are programmed in C++.
 
